@@ -1,0 +1,13 @@
+{
+  "mainnet": {},
+  "testnet": {
+    "UniswapV2Factory": "0x29E33eF792a5c7b9171FCcdfC505AdA40c60E999",
+    "Weth": "0x2C154Aa6d5434394F640E2C2b702B4F35A9E7393",
+    "UniswapV2Router": "0x75908084b81C4cE03A60cAa882dd1eDbe46Bb7B3"
+  },
+  "avax_mainnet": {
+    "UniswapV2Factory": "0xa2E0215146460315b9C51AF82F4a50fE4492b102",
+    "Weth": "0x11ed97e8FE965B5cd1eEa9De84ea2b949F72De56",
+    "UniswapV2Router": "0x7e1090746AB11DC1BbDAcE625644c066ad4cbF6b"
+  }
+}
