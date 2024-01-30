@@ -5,12 +5,11 @@ const commitFilePath = process.argv[2];
 const CommitTypeEnum = {
 	remove: ":fire:",
 	fix: ":bug:",
-	feature: ":sparkles:",
+	feat: ":sparkles:",
 	refactor: ":recycle:",
 	config: ":wrench:",
 	packages: ":package:",
-	assets: ":bento:",
-	architecture: ":building_construction:",
+	chore: ":memo:",
 	merge: ":twisted_rightwards_arrows:"
 };
 

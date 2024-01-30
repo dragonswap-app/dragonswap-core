@@ -14,12 +14,11 @@ module.exports = {
 			[
 				"remove",
 				"fix",
-				"feature",
+				"feat",
 				"refactor",
 				"config",
 				"packages",
-				"assets",
-				"architecture",
+				"chore",
 				"merge"
 			],
 		],
