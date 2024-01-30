@@ -2,8 +2,6 @@ const fs = require("fs");
 
 const commitFilePath = process.argv[2];
 
-console.log("test 4")
-
 const CommitTypeEnum = {
 	remove: ":fire:",
 	fix: ":bug:",
