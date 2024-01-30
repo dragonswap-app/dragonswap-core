@@ -11,7 +11,8 @@
     "size": "npx hardhat size-contracts",
     "node": "npx hardhat node",
     "node-mainnet": "npx hardhat node --fork",
-    "node-testnet": "npx hardhat node --fork https://evm-devnet.seinetwork.io"
+    "node-testnet": "npx hardhat node --fork https://evm-devnet.seinetwork.io",
+    "clean": "rimraf ./cache ./artifacts ./node_modules"
   },
   "keywords": [],
   "author": "nima-enterprises",
