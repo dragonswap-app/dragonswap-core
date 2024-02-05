@@ -10,7 +10,8 @@ const CommitTypeEnum = {
 	config: ":wrench:",
 	packages: ":package:",
 	chore: ":memo:",
-	merge: ":twisted_rightwards_arrows:"
+	merge: ":twisted_rightwards_arrows:",
+	ci: ":camera_flash:"
 };
 
 (async () => {

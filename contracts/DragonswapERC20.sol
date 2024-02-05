@@ -72,7 +72,9 @@ contract DragonswapERC20 is IDragonswapERC20 {
 
     function transferFrom(address from, address to, uint value) external returns (bool) {
         if (allowance[from][msg.sender] != uint(-1)) {
-            allowance[from][msg.sender] = allowance[from][msg.sender].sub(value);
+            uint remainingAllowance = allowance[from][msg.sender].sub(value);
+            allowance[from][msg.sender] = remainingAllowance;
+            emit Approval(from, msg.sender, remainingAllowance);
         }
         _transfer(from, to, value);
         return true;

@@ -21,7 +21,7 @@ library DragonswapLibrary {
                 hex'ff',
                 factory,
                 keccak256(abi.encodePacked(token0, token1)),
-                hex'1b3e04307b072bdd8c3c97d4f9c8328e2a0bf37df8e36064c1b3468c7c7bc8b2' // init code hash
+                hex'7240a7a71cc85d56ee2e5ca1c5236ce877abc9b49b4696adc94968ef43796fed' // init code hash
             ))));
     }
 

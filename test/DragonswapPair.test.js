@@ -349,17 +349,17 @@ describe('DragonswapPair', () => {
     await pair.transfer(pair.address, expectedLiquidity.sub(MINIMUM_LIQUIDITY));
     await pair.burn(wallet.address, overrides);
     expect(await pair.totalSupply()).to.eq(
-      MINIMUM_LIQUIDITY.add('149850284580759')
+      MINIMUM_LIQUIDITY.add('449550988472965')
     );
-    expect(await pair.balanceOf(other.address)).to.eq('149850284580759');
+    expect(await pair.balanceOf(other.address)).to.eq('449550988472965');
 
     // using 1000 here instead of the symbolic MINIMUM_LIQUIDITY because the amounts only happen to be equal...
     // ...because the initial liquidity amounts were equal
     expect(await token0.balanceOf(pair.address)).to.eq(
-      BigNumber.from(1000).add('149701010218466')
+      BigNumber.from(1000).add('449103030655401')
     );
     expect(await token1.balanceOf(pair.address)).to.eq(
-      BigNumber.from(1000).add('150000112387782')
+      BigNumber.from(1000).add('450000337163343')
     );
   });
 });

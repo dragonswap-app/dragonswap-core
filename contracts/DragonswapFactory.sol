@@ -10,9 +10,12 @@ contract DragonswapFactory is IDragonswapFactory {
     mapping(address => mapping(address => address)) public getPair;
     address[] public allPairs;
 
-    event PairCreated(address indexed token0, address indexed token1, address pair, uint);
+    event FeeToSet(address indexed feeTo);
+    event FeeToSetterSet(address indexed feeToSetter);
+    event PairCreated(address indexed token0, address indexed token1, address pair, uint length);
 
     constructor(address _feeToSetter) public {
+        require(_feeToSetter != address(0));
         feeToSetter = _feeToSetter;
     }
 
@@ -40,10 +43,12 @@ contract DragonswapFactory is IDragonswapFactory {
     function setFeeTo(address _feeTo) external {
         require(msg.sender == feeToSetter, 'Dragonswap: FORBIDDEN');
         feeTo = _feeTo;
+        emit FeeToSet(_feeTo);
     }
 
     function setFeeToSetter(address _feeToSetter) external {
         require(msg.sender == feeToSetter, 'Dragonswap: FORBIDDEN');
         feeToSetter = _feeToSetter;
+        emit FeeToSetterSet(_feeToSetter);
     }
 }

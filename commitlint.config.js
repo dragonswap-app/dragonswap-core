@@ -19,7 +19,8 @@ module.exports = {
 				"config",
 				"packages",
 				"chore",
-				"merge"
+				"merge",
+				"ci"
 			],
 		],
 	},

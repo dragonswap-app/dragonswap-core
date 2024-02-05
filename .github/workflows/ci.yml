@@ -42,6 +42,6 @@ jobs:
         run: |
           # commit and push
           if [ -n "$(git status --porcelain --untracked-files=no)" ]; then
-            git commit -m "🪄 ci"
+            git commit -m "ci: Update ABIs"
             git push
           fi
