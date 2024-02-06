@@ -992,6 +992,32 @@
           {
             "indexed": true,
             "internalType": "address",
+            "name": "feeTo",
+            "type": "address"
+          }
+        ],
+        "name": "FeeToSet",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "feeToSetter",
+            "type": "address"
+          }
+        ],
+        "name": "FeeToSetterSet",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
             "name": "token0",
             "type": "address"
           },
@@ -1010,7 +1036,7 @@
           {
             "indexed": false,
             "internalType": "uint256",
-            "name": "",
+            "name": "length",
             "type": "uint256"
           }
         ],
