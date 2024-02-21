@@ -1,35 +1,4 @@
 {
   "mainnet": {},
-  "testnet": {
-    "tokens": [
-      {
-        "name": "Tether USD",
-        "symbol": "USDT"
-      },
-      {
-        "name": "USD Coin",
-        "symbol": "USDC"
-      },
-      {
-        "name": "Pyth Network",
-        "symbol": "PYTH"
-      },
-      {
-        "name": "Dai Stablecoin",
-        "symbol": "DAI"
-      },
-      {
-        "name": "Dragonswap",
-        "symbol": "DSWAP"
-      },
-      {
-        "name": "Gamblino",
-        "symbol": "GLO"
-      },
-      {
-        "name": "Avalaunch",
-        "symbol": "XAVA"
-      }
-    ]
-  }
+  "testnet": {}
 }

@@ -2,55 +2,25 @@ const hre = require('hardhat');
 const { getJson, saveJson, jsons, sleep} = require('./utils');
 const { ethers } = require('hardhat');
 
-const wallets = [
-    '0x7B177Ab8381073865a908A637D480f6BE2eF537e',
-    '0x4E60AF2ED6b60E43595b41354b1B7E063d0c0008',
-    '0xc3D08b11F8FA3A1777aC6e15cdFc914F4a435f73',
-    '0xac1Dc7873d5718D976eDA7B8461138b21CA7F929',
-    '0xC7bc6186CbB42C723C32235b69B6a1aE560F79D0',
-    '0x58d1Db07ed7e7C17cbF1AFC462B31d47d13fdDe1',
-    '0x19f7E4E1B838758F573D1Debf00A95d6A3168830',
-    '0x70AD5F5Ed1BB592d910e7F3f50fc6Cd472052F58',
-    '0xbEf668797f3331a9E76151bD22FB1646B3CFf006',
-    '0xdc1A3696ED4eB3d8616A7f764d5204669ed579f9',
-    '0xa74580E51c339022F961c981ed4b8c21dC42425B',
-    '0xa18DeCb50Eb1a42A87e903b8038CF137D7830034',
-    '0x0ED2Cf4b2288A8C23f4FFFbF59d6dDB2BA94B78c',
-    '0x83C5Ba90EeAfE1c844851D26A77e59F78242515e',
-    '0xD0CaE2309f322E24fBBc7E9D5F4995B02eF901e4'
-]
+const tokens = process.env.TOKENS ? JSON.parse(process.env.TOKENS) : [];
+const wallets = process.env.WALLETS ? JSON.parse(process.env.WALLETS): [];
 
 const wait = async () => {await sleep(3000)};
 
 const getRandomNumber = (min, max) => {
     return Math.ceil(Math.random() * (max - min) + min);
 }
-const deployTokens = async(tokenName, tokenSymbol) => {
-    let mockTokenFactory = null;
+const deployTokens = async(tokenName, tokenSymbol, tokenDecimals) => {
+    const mockTokenFactory = await hre.ethers.getContractFactory('Token');
+    const mockToken = await mockTokenFactory.deploy(tokenName, tokenSymbol, tokenDecimals);
+    await mockToken.deployed();
 
-    try {
-        if (tokenSymbol === "USDT" || tokenSymbol === "USDC") {
-            mockTokenFactory = await hre.ethers.getContractFactory('Tether');
-        } else {
-            mockTokenFactory = await hre.ethers.getContractFactory('Token');
-        }
+    console.log(`${tokenName} address: ${mockToken.address}`);
 
-        if (!mockTokenFactory) {
-            throw new Error('Contract factory is null.');
-        }
+    saveJson(jsons.addresses, hre.network.name, `${tokenSymbol}`, mockToken.address);
 
-        const mockToken = await mockTokenFactory.deploy(tokenName, tokenSymbol);
-        await mockToken.deployed();
+    console.log('Done!');
 
-        console.log(`${tokenName} address: ${mockToken.address}`);
-
-        saveJson(jsons.addresses, hre.network.name, `${tokenSymbol}`, mockToken.address);
-
-        console.log('Done!');
-
-    } catch (error) {
-        console.error('Error:', error);
-    }
 }
 
 const loadAddresses = async() => {
@@ -250,9 +220,6 @@ const distributeTokens = async(tokens) => {
 
 
 async function main() {
-    await hre.run('compile');
-
-    const tokens = await getJson(jsons.config)[hre.network.name]["tokens"];
 
     for (let i = 0; i < tokens.length; i++) {
         await deployTokens(tokens[i].name, tokens[i].symbol);
