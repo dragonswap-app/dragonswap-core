@@ -40,8 +40,8 @@ const loadAddresses = async() => {
 
     const dragonswapFactory = await hre.ethers.getContractAt('DragonswapFactory', dragonswapFactoryAddress);
 
-    let tether = await hre.ethers.getContractAt("Tether", usdtAddress);
-    let usdc = await hre.ethers.getContractAt("Tether", usdcAddress);
+    let tether = await hre.ethers.getContractAt("Token", usdtAddress);
+    let usdc = await hre.ethers.getContractAt("Token", usdcAddress);
     let pyth = await hre.ethers.getContractAt("Token", pythAddress);
     let dai = await hre.ethers.getContractAt("Token", daiAddress);
     let dswap = await hre.ethers.getContractAt("Token", dswapAddress);
@@ -93,7 +93,6 @@ const createPools = async() => {
     await dragonswapRouter.addLiquiditySEI(tether.address, usdtAmount, usdtAmount, seiAmount, to, deadline, {value: seiAmount});
     await wait();
     console.log("WSEI/USDT", await dragonswapFactory.getPair(wseiAddress,tether.address));
-    await wait();
 
     // Make pool WSEI / PYTH
     seiAmount = hre.ethers.utils.parseEther(getRandomNumber(20, 50).toString());
@@ -104,7 +103,6 @@ const createPools = async() => {
     await dragonswapRouter.addLiquiditySEI(pyth.address, pythAmount, pythAmount, seiAmount, to, deadline, {value: seiAmount});
     await wait();
     console.log("WSEI/PYTH", await dragonswapFactory.getPair(seilor.address,pyth.address));
-    await wait();
 
     // // Make pool USDT / USDC
     const amountUSDTUSDC = 1000000;
@@ -118,7 +116,6 @@ const createPools = async() => {
     await dragonswapRouter.addLiquidity(tether.address, usdc.address, usdtAmount, usdcAmount, usdtAmount, usdcAmount, to, deadline);
     await wait();
     console.log("USDT/USDC", await dragonswapFactory.getPair(tether.address, usdc.address));
-    await wait();
 
     // Make pool DSWAP / USDT
     dswapAmount = hre.ethers.utils.parseEther("1000000");
@@ -130,7 +127,6 @@ const createPools = async() => {
     await dragonswapRouter.addLiquidity(tether.address, dswap.address, usdtAmount, dswapAmount, usdtAmount, dswapAmount, to, deadline);
     await wait();
     console.log("DSWAP/USDT", await dragonswapFactory.getPair(dswap.address, tether.address));
-    await wait();
 
     // Make pool XAVA / USDC
     xavaAmount = hre.ethers.utils.parseEther("1000000");
@@ -142,7 +138,6 @@ const createPools = async() => {
     await dragonswapRouter.addLiquidity(usdc.address, xava.address, usdcAmount, xavaAmount, usdcAmount, xavaAmount, to, deadline);
     await wait();
     console.log("XAVA/USDC", await dragonswapFactory.getPair(xava.address, usdc.address));
-    await wait();
 
     // Make pool DSWAP / USDC
     dswapAmount = hre.ethers.utils.parseEther("1000000");
@@ -154,7 +149,6 @@ const createPools = async() => {
     await dragonswapRouter.addLiquidity(usdc.address, dswap.address, usdcAmount, dswapAmount, usdcAmount, dswapAmount, to, deadline);
     await wait();
     console.log("DSWAP/USDC", await dragonswapFactory.getPair(dswap.address, usdc.address));
-    await wait();
 
     // Make pool GLO / USDT
     gloAmount = hre.ethers.utils.parseEther("500000");
@@ -166,7 +160,6 @@ const createPools = async() => {
     await dragonswapRouter.addLiquidity(tether.address, glo.address, usdtAmount, gloAmount, usdtAmount, gloAmount, to, deadline);
     await wait();
     console.log("GLO/USDT", await dragonswapFactory.getPair(glo.address, tether.address));
-    await wait();
 
     // // Make pool USDC / DAI
     usdcAmount = hre.ethers.utils.parseUnits("500000", 6);
@@ -178,7 +171,6 @@ const createPools = async() => {
     await dragonswapRouter.addLiquidity(usdc.address, dai.address, usdcAmount, daiAmount, usdcAmount, daiAmount, to, deadline);
     await wait()
     console.log("USDC/DAI", await dragonswapFactory.getPair(usdc.address, dai.address));
-    await wait();
 
 
     console.log(`
@@ -222,14 +214,12 @@ const distributeTokens = async(tokens) => {
 async function main() {
 
     for (let i = 0; i < tokens.length; i++) {
-        await deployTokens(tokens[i].name, tokens[i].symbol);
+        await deployTokens(tokens[i].name, tokens[i].symbol, tokens[i].decimals);
     }
 
-    await createPools();
-
-    await distributeTokens(tokens);
-
-
+    // await createPools();
+    //
+    // await distributeTokens(tokens);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
