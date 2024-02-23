@@ -63,7 +63,7 @@ const loadAddresses = async() => {
 }
 
 const createPools = async() => {
-    let usdtAmount, usdcAmount, seiAmount, draAmount, pythAmount, dswapAmount, xavaAmount, gloAmount, daiAmount;
+    let usdtAmount, usdcAmount, seiAmount, pythAmount, dswapAmount, xavaAmount, gloAmount, daiAmount;
 
     const to = (await hre.ethers.getSigner()).address;
 
@@ -86,13 +86,13 @@ const createPools = async() => {
 
     // Make pool WSEI / USDT
     seiAmount = hre.ethers.utils.parseEther("50");
-    usdtAmount = hre.ethers.utils.parseUnits("100",6);
+    usdtAmount = hre.ethers.utils.parseUnits("100", await tether.decimals());
 
     await tether.approve(dragonswapRouter.address, usdtAmount);
     await wait();
     await dragonswapRouter.addLiquiditySEI(tether.address, usdtAmount, usdtAmount, seiAmount, to, deadline, {value: seiAmount});
     await wait();
-    console.log("WSEI/USDT", await dragonswapFactory.getPair(wseiAddress,tether.address));
+    console.log("WSEI/USDT", await dragonswapFactory.getPair(wseiAddress, tether.address));
 
     // Make pool WSEI / PYTH
     seiAmount = hre.ethers.utils.parseEther(getRandomNumber(20, 50).toString());
@@ -102,12 +102,12 @@ const createPools = async() => {
     await wait();
     await dragonswapRouter.addLiquiditySEI(pyth.address, pythAmount, pythAmount, seiAmount, to, deadline, {value: seiAmount});
     await wait();
-    console.log("WSEI/PYTH", await dragonswapFactory.getPair(seilor.address,pyth.address));
+    console.log("WSEI/PYTH", await dragonswapFactory.getPair(seilor.address, pyth.address));
 
     // // Make pool USDT / USDC
     const amountUSDTUSDC = 1000000;
-    usdtAmount = hre.ethers.utils.parseUnits(amountUSDTUSDC.toString(), 6);
-    usdcAmount = hre.ethers.utils.parseUnits(amountUSDTUSDC.toString(), 6);
+    usdtAmount = hre.ethers.utils.parseUnits(amountUSDTUSDC.toString(), await tether.decimals());
+    usdcAmount = hre.ethers.utils.parseUnits(amountUSDTUSDC.toString(), await usdc.decimals());
 
     await tether.approve(dragonswapRouter.address, usdtAmount);
     await wait();
@@ -119,7 +119,7 @@ const createPools = async() => {
 
     // Make pool DSWAP / USDT
     dswapAmount = hre.ethers.utils.parseEther("1000000");
-    usdtAmount = hre.ethers.utils.parseUnits("500000", 6);
+    usdtAmount = hre.ethers.utils.parseUnits("500000", await tether.decimals());
     await dswap.approve(dragonswapRouter.address, dswapAmount);
     await wait();
     await tether.approve(dragonswapRouter.address, usdtAmount);
@@ -130,7 +130,7 @@ const createPools = async() => {
 
     // Make pool XAVA / USDC
     xavaAmount = hre.ethers.utils.parseEther("1000000");
-    usdcAmount = hre.ethers.utils.parseUnits("1200000", 6);
+    usdcAmount = hre.ethers.utils.parseUnits("1200000", await usdc.decimals());
     await xava.approve(dragonswapRouter.address, xavaAmount);
     await wait();
     await usdc.approve(dragonswapRouter.address, usdcAmount);
@@ -141,7 +141,7 @@ const createPools = async() => {
 
     // Make pool DSWAP / USDC
     dswapAmount = hre.ethers.utils.parseEther("1000000");
-    usdcAmount = hre.ethers.utils.parseUnits("500000", 6);
+    usdcAmount = hre.ethers.utils.parseUnits("500000", await usdc.decimals());
     await dswap.approve(dragonswapRouter.address, dswapAmount);
     await wait();
     await usdc.approve(dragonswapRouter.address, usdcAmount);
@@ -152,7 +152,7 @@ const createPools = async() => {
 
     // Make pool GLO / USDT
     gloAmount = hre.ethers.utils.parseEther("500000");
-    usdtAmount = hre.ethers.utils.parseUnits("1000000", 6);
+    usdtAmount = hre.ethers.utils.parseUnits("1000000", await tether.decimals());
     await glo.approve(dragonswapRouter.address, gloAmount);
     await wait();
     await tether.approve(dragonswapRouter.address, usdtAmount);
@@ -162,7 +162,7 @@ const createPools = async() => {
     console.log("GLO/USDT", await dragonswapFactory.getPair(glo.address, tether.address));
 
     // // Make pool USDC / DAI
-    usdcAmount = hre.ethers.utils.parseUnits("500000", 6);
+    usdcAmount = hre.ethers.utils.parseUnits("500000", await usdc.decimals());
     daiAmount = hre.ethers.utils.parseEther("500000");
     await usdc.approve(dragonswapRouter.address, usdcAmount);
     await wait();
@@ -191,13 +191,8 @@ const distributeTokens = async(tokens) => {
     for(let i = 0; i < tokens.length; i++) {
         const tokenAddress = getJson(jsons.addresses)[hre.network.name][tokens[i].symbol];
         const token = await hre.ethers.getContractAt('Token', tokenAddress);
-        let amount = getRandomNumber(1000, 10000);
-
-        if (tokens[i].symbol === "USDT" || tokens[i].symbol === "USDC") {
-            amount = hre.ethers.utils.parseUnits(amount.toString(), 6);
-        } else {
-            amount = hre.ethers.utils.parseEther(amount.toString());
-        }
+        const tokenDecimals = await token.decimals();
+        let amount = hre.ethers.utils.parseUnits(getRandomNumber(1000, 10000).toString(), tokenDecimals);
 
         for(let j = 0; j < wallets.length; j++) {
             await wait();
@@ -213,13 +208,13 @@ const distributeTokens = async(tokens) => {
 
 async function main() {
 
-    for (let i = 0; i < tokens.length; i++) {
-        await deployTokens(tokens[i].name, tokens[i].symbol, tokens[i].decimals);
-    }
-
-    // await createPools();
+    // for (let i = 0; i < tokens.length; i++) {
+    //     await deployTokens(tokens[i].name, tokens[i].symbol, tokens[i].decimals);
+    // }
     //
-    // await distributeTokens(tokens);
+    // await createPools();
+
+    await distributeTokens(tokens);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
