@@ -9,7 +9,7 @@ async function factoryFixture([wallet], provider) {
 async function pairFixture([wallet], provider) {
   const { factory } = await factoryFixture([wallet], provider);
 
-  const erc20Factory = await ethers.getContractFactory('ERC20');
+  const erc20Factory = await ethers.getContractFactory('contracts/test/ERC20.sol:ERC20');
   const tokenA = await erc20Factory
     .connect(wallet)
     .deploy(expandTo18Decimals(10000));

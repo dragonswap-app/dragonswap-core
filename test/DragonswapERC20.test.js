@@ -11,7 +11,7 @@ const TOTAL_SUPPLY = expandTo18Decimals(10000);
 const TEST_AMOUNT = expandTo18Decimals(10);
 
 let wallet, other, pk;
-describe('UniswapV2ERC20', () => {
+describe('DragonswapERC20', () => {
   before(async () => {
     [wallet, other] = await ethers.getSigners();
     const network = await ethers.provider.getNetwork();
@@ -24,7 +24,7 @@ describe('UniswapV2ERC20', () => {
   });
 
   let token = beforeEach(async () => {
-    tokenFactory = await ethers.getContractFactory('ERC20');
+    tokenFactory = await ethers.getContractFactory('contracts/test/ERC20.sol:ERC20');
     token = await tokenFactory.connect(wallet).deploy(TOTAL_SUPPLY);
   });
 
