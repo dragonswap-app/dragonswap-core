@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const { getJson, jsons, relativePath } = require('./utils');
 
-const contracts = ['DragonswapRouter', 'DragonswapFactory', 'DragonswapPair'];
+const contracts = ['DragonswapRouter', 'DragonswapFactory', 'DragonswapPair', 'IDragonswapERC20'];
 const mainTree = ['master', 'develop'];
 
 async function main() {
