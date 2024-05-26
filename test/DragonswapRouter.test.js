@@ -1,17 +1,11 @@
 const chai = require('chai');
 const { ethers } = require('hardhat');
 const { MaxUint256 } = require('ethers').constants;
-const { keccak256, defaultAbiCoder, toUtf8Bytes, hexlify } =
-  require('ethers').utils;
 const { BigNumber, Contract } = require('ethers');
 const { expect } = require('chai');
 const { getApprovalDigest, expandTo18Decimals } = require('./helpers.js');
-const { solidity, MockProvider } = require('ethereum-waffle');
+const { solidity } = require('ethereum-waffle');
 const { ecsign } = require('ethereumjs-util');
-
-// import IUniswapV2Pair from '@uniswap/v2-core/build/IUniswapV2Pair.json'
-
-// import DeflatingERC20 from '../build/DeflatingERC20.json'
 
 chai.use(solidity);
 
@@ -60,11 +54,11 @@ describe('DragonswapRouter', () => {
 
     await factory.connect(wallet).createPair(tokenA.address, tokenB.address);
     const pairAddress = await factory.getPair(tokenA.address, tokenB.address);
-    const uniswapV2PairFactory =
+    const dragonswapPairFactory =
       await ethers.getContractFactory('DragonswapPair');
     pair = new Contract(
       pairAddress,
-      JSON.parse(uniswapV2PairFactory.interface.format('json')),
+      JSON.parse(dragonswapPairFactory.interface.format('json')),
       ethers.provider
     ).connect(wallet);
 
