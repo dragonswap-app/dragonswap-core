@@ -12,6 +12,7 @@ module.exports = {
   networks: {
     mainnet: {
       url: 'https://evm-rpc.sei-apis.com',
+      chainId: 1329,
       timeout,
       accounts,
     },
