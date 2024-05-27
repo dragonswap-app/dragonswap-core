@@ -1,5 +1,9 @@
 {
-  "mainnet": {},
+  "mainnet": {
+    "DragonswapFactory": "0x71f6b49ae1558357bBb5A6074f1143c46cBcA03d",
+    "Wsei": "0xE30feDd158A2e3b13e9badaeABaFc5516e95e8C7",
+    "DragonswapRouter": "0xa4cF2F53D1195aDDdE9e4D3aCa54f556895712f2"
+  },
   "testnet": {
     "UniswapV2Factory": "0x29E33eF792a5c7b9171FCcdfC505AdA40c60E999",
     "Weth": "0x2C154Aa6d5434394F640E2C2b702B4F35A9E7393",
