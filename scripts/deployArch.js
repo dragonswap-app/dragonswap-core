@@ -2,7 +2,7 @@ const hre = require('hardhat');
 const { saveJson, jsons } = require('./utils');
 
 async function main() {
-  const feeToSetter = '0x8a6edfCbCcdc9D6E4399f5190439fDeeba956c8a';
+  const feeToSetter = '0xfeC4fA7d245C2588686483c8246d5D308CaB8c74';
 
   const DragonswapPairFactory =
     await hre.ethers.getContractFactory('DragonswapFactory');
