@@ -5,11 +5,8 @@
     "DragonswapRouter": "0xa4cF2F53D1195aDDdE9e4D3aCa54f556895712f2"
   },
   "testnet": {
-    "UniswapV2Factory": "0x29E33eF792a5c7b9171FCcdfC505AdA40c60E999",
-    "Weth": "0x2C154Aa6d5434394F640E2C2b702B4F35A9E7393",
-    "UniswapV2Router": "0x75908084b81C4cE03A60cAa882dd1eDbe46Bb7B3",
-    "DragonswapFactory": "0x5D370a6189F89603FaB67e9C68383e63F7B6A262",
-    "Wsei": "0x027D2E627209f1cebA52ADc8A5aFE9318459b44B",
-    "DragonswapRouter": "0x2346d3A6fb18Ff3ae590Ea31d9e41E6AB8c9f5EB"
+    "DragonswapFactory": "0x385488FfbFf2265DaC31d38497b616fA6cc81231",
+    "Wsei": "0xdE5cc7BdFff9311373337e4Dda6ce06850494189",
+    "DragonswapRouter": "0x4Ed5B9C2C3E0689d516F312e88b12D96D2548A66"
   }
 }
