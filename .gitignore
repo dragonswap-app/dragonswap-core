@@ -1,4 +1,3 @@
-artifacts
 cache
 node_modules
 coverage
@@ -14,3 +13,7 @@ yarn-error.log*
 # Misc
 .DS_Store
 *.pem
+
+artifacts/*
+!artifacts/contracts
+artifacts/contracts/**/*.dbg.json
