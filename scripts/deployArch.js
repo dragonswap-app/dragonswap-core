@@ -2,10 +2,11 @@ const hre = require('hardhat');
 const { saveJson, jsons } = require('./utils');
 
 async function main() {
-  const feeToSetter = '0x8a6edfCbCcdc9D6E4399f5190439fDeeba956c8a';
+  const feeToSetter = '0x328f7689244Bd7D042c4aE9eC18077b6781D6Dd8';
 
-  const DragonswapPairFactory =
-    await hre.ethers.getContractFactory('DragonswapFactory');
+  const feeTo = '0xB6Fa64Ff5d28E238559A2B177CFe9bBe2beD95eB';
+
+  const DragonswapPairFactory = await hre.ethers.getContractFactory('DragonswapFactory');
   const dragonswapPairFactory = await DragonswapPairFactory.deploy(feeToSetter);
   await dragonswapPairFactory.deployed();
   console.log(
@@ -18,6 +19,8 @@ async function main() {
     'DragonswapFactory',
     dragonswapPairFactory.address
   );
+
+  await dragonswapPairFactory.setFeeTo(feeTo);
 
   const Wsei = await hre.ethers.getContractFactory('WSEI');
   const wsei = await Wsei.deploy();
